@@ -5,14 +5,7 @@ import { Product } from "../models/product.model.js";
 import { Order } from "../models/order.model.js";
 import { Cart } from "../models/cart.model.js";
 
-let stripe;
-
-const getStripe = () => {
-  if (!stripe) {
-    stripe = new Stripe(ENV.STRIPE_SECRET_KEY);
-  }
-  return stripe;
-};
+const stripe = new Stripe(ENV.STRIPE_SECRET_KEY);
 
 export async function createPaymentIntent(req, res) {
   try {
@@ -60,10 +53,10 @@ export async function createPaymentIntent(req, res) {
     let customer;
     if (user.stripeCustomerId) {
       // find the customer
-      customer = await getStripe().customers.retrieve(user.stripeCustomerId);
+      customer = await stripe.customers.retrieve(user.stripeCustomerId);
     } else {
       // create the customer
-      customer = await getStripe().customers.create({
+      customer = await stripe.customers.create({
         email: user.email,
         name: user.name,
         metadata: {
@@ -77,7 +70,7 @@ export async function createPaymentIntent(req, res) {
     }
 
     // create payment intent
-    const paymentIntent = await getStripe().paymentIntents.create({
+    const paymentIntent = await stripe.paymentIntents.create({
       amount: Math.round(total * 100), // convert to cents
       currency: "usd",
       customer: customer.id,
@@ -106,7 +99,7 @@ export async function handleWebhook(req, res) {
   let event;
 
   try {
-    event = getStripe().webhooks.constructEvent(req.body, sig, ENV.STRIPE_WEBHOOK_SECRET);
+    event = stripe.webhooks.constructEvent(req.body, sig, ENV.STRIPE_WEBHOOK_SECRET);
   } catch (err) {
     console.error("Webhook signature verification failed:", err.message);
     return res.status(400).send(`Webhook Error: ${err.message}`);
