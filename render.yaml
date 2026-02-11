@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: buy-ya-api
+    env: node
+    rootDir: api
+    buildCommand: npm install
+    startCommand: npm start
+    plan: starter
+    autoDeploy: true
+
+  - type: static
+    name: buy-ya-admin
+    rootDir: admin
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    autoDeploy: true
