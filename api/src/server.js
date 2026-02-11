@@ -18,7 +18,7 @@ if (ENV.NODE_ENV === 'production') {
 
   app.use(express.static(adminDistPath));
 
-  app.get('*', (req, res, next) => {
+  app.get(/.*/, (req, res, next) => {
     if (req.path.startsWith('/api')) {
       return next();
     }
