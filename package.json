@@ -1,0 +1,24 @@
+{
+  "name": "buy-ya",
+  "version": "1.0.0",
+  "main": "index.js",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "build": "npm install --prefix api && npm install --prefix admin && npm run build --prefix admin",
+    "start": "npm run start --prefix api"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yusifu-m-barrie/buy-ya.git"
+  },
+  "keywords": [], 
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yusifu-m-barrie/buy-ya/issues"
+  },
+  "homepage": "https://github.com/yusifu-m-barrie/buy-ya#readme",
+  "description": ""
+}
