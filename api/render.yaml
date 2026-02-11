@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: buy-ya-api
+    runtime: node
+    region: oregon
+    buildCommand: npm install
+    startCommand: npm start
+    rootDir: api
+    envVars:
+      - key: NODE_ENV
+        value: production
