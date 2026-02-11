@@ -3,7 +3,7 @@ services:
     name: buy-ya
     env: node
     rootDir: api
-    buildCommand: npm install && cd ../admin && npm install && npm run build
+    buildCommand: npm install && cd ../admin && npm install --include=dev && npm run build
     startCommand: npm start
     plan: starter
     autoDeploy: true
